@@ -1,0 +1,26 @@
+$cellSize: 10px
+
+@mixin border-radius($radius)
+  -webkit-border-radius: $radius
+  -moz-border-radius: $radius
+  border-radius: $radius
+
+div#app
+  margin: 10px
+  width: 500px
+
+  .life
+    .cellRow
+      display: inline-block
+      .cell
+        width: $cellSize
+        height: $cellSize
+        // TODO: do not display borders for two adjacent cells s.t. there is a 2px border
+        border: 1px solid black
+
+      .cell.dead
+        background: #FFFFFF
+      .cell.alive
+        background: #8CD8B2
+      .cell.alive.stable
+        background: #26D87F
