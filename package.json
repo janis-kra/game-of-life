@@ -1,0 +1,24 @@
+{
+  "name": "Game Of Life by JanisKra",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/janis-kra/game-of-life.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/janis-kra/game-of-life/issues"
+  },
+  "homepage": "https://github.com/janis-kra/game-of-life#readme",
+  "devDependencies": {
+    "babel-eslint": "^6.1.0",
+    "eslint": "2.8.0",
+    "eslint-plugin-react": "5.0.1"
+  }
+}
