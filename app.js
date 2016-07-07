@@ -69,6 +69,32 @@ const rollAge = () => {
   }
 };
 
+const restartCells = () => {
+  state.running = false;
+  state.cells = [];
+  for (let i = 0; i < state.size.x; i++) { // cols
+    state.cells.push([]); // push new column
+    for (let j = 0; j < state.size.y; j++) { // rows
+      state.cells[i].push({ age: rollAge() }); // push new cell at row j and column i
+    }
+  }
+};
+
+const start = () => {
+  if (!state.running) { // only start if the game is not already running
+    state.running = true;
+    setInterval(() => {
+      if (state.running) {
+        updateCells();
+      }
+    }, state.speed);
+  }
+};
+
+const stop = () => {
+  state.running = false;
+};
+
 const Cell = ({ age }) => (
   <div className={ 'cell ' + getClassForCell(age) } />
 );
@@ -90,18 +116,15 @@ const Life = mobxReact.observer(() => (
 
 const Controls = () => (
   <div className='controls'>
-    Controls
+    <button onClick={ updateCells }>Step</button>
+    <button onClick={ start }>Start</button>
+    <button onClick={ stop }>Stop</button>
+    <button onClick={ restartCells }>Restart</button>
   </div>
 );
 
 const App = () => {
-  for (let i = 0; i < state.size.x; i++) { // cols
-    state.cells.push([]); // push new column
-    for (let j = 0; j < state.size.y; j++) { // rows
-      state.cells[i].push({ age: rollAge() }); // push new cell at row j and column i
-    }
-  }
-  updateCells();
+  restartCells();
   return (
     <div>
       <h1>Game Of Life</h1>
