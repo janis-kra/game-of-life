@@ -3,29 +3,31 @@ const state = mobx.observable({
   size: {
     x: 5,
     y: 5
-  }
+  },
+  running: false,
+  speed: 1000 // speed in ms
 });
 
-const getNeighborsForCoords = (row, col) => [
-  [row - 1, col - 1],
-  [row - 1, col],
-  [row - 1, col + 1],
-  [row, col - 1],
-  [row, col + 1],
-  [row + 1, col - 1],
-  [row + 1, col],
-  [row + 1, col + 1]
+const getNeighborsForCoords = (col, row) => [
+  [col - 1, row - 1],
+  [col - 1, row],
+  [col - 1, row + 1],
+  [col, row - 1],
+  [col, row + 1],
+  [col + 1, row - 1],
+  [col + 1, row],
+  [col + 1, row + 1]
 ].map((coords) => {
-  const x = coords[1] === -1 ? state.size.x - 1 :
+  const rowIndex = coords[1] === -1 ? state.size.x - 1 :
     coords[1] === state.size.x ? 0 : coords[1];
-  const y = coords[0] === -1 ? state.size.y - 1 :
+  const colIndex = coords[0] === -1 ? state.size.y - 1 :
     coords[0] === state.size.y ? 0 : coords[0];
-  return state.cells[x][y];
+  return state.cells[colIndex][rowIndex];
 });
 
-const createCell = (cell, col, row) => {
+const updateCell = (cell, col, row) => {
   let age;
-  const neighbors = getNeighborsForCoords(row, col);
+  const neighbors = getNeighborsForCoords(col, row);
   const aliveNeighbors = neighbors.reduce((aliveCells, c) => {
     return aliveCells + (c.age === 0 ? 0 : 1);
   }, 0);
@@ -43,7 +45,7 @@ const createCell = (cell, col, row) => {
 
 const updateCells = () => {
   const cells = state.cells.map((cellColumn, colIndex) =>
-    cellColumn.map((cell, index) => createCell(cell, colIndex, index))
+    cellColumn.map((cell, index) => updateCell(cell, colIndex, index))
   );
   state.cells = cells;
 };
