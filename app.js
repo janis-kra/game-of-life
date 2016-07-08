@@ -31,12 +31,14 @@ const updateCell = (cell, col, row) => {
   const aliveNeighbors = neighbors.reduce((aliveCells, c) => {
     return aliveCells + (c.age === 0 ? 0 : 1);
   }, 0);
-  if (aliveNeighbors > 2 ||
+
+  if (aliveNeighbors === 3 ||
     aliveNeighbors === 2 && cell.age > 0) {
     age = cell.age + 1; // springs alive or gets older
   } else {
-    age = 0;
+    age = 0; // die by over- /underpopulation
   }
+
   return {
     ...cell,
     age: age
